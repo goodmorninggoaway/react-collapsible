@@ -30,7 +30,8 @@ var Collapsible = _react2.default.createClass({
     trigger: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.element]),
     triggerWhenOpen: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.element]),
     lazyRender: _react2.default.PropTypes.bool,
-    overflowWhenOpen: _react2.default.PropTypes.oneOf(['hidden', 'visible', 'auto', 'scroll', 'inherit', 'initial', 'unset'])
+    overflowWhenOpen: _react2.default.PropTypes.oneOf(['hidden', 'visible', 'auto', 'scroll', 'inherit', 'initial', 'unset']),
+    triggerSibling: _react2.default.PropTypes.element
   },
 
   //If no transition time or easing is passed then default to this
@@ -41,7 +42,8 @@ var Collapsible = _react2.default.createClass({
       open: false,
       classParentString: 'Collapsible',
       lazyRender: false,
-      overflowWhenOpen: 'hidden'
+      overflowWhenOpen: 'hidden',
+      triggerSibling: null
     };
   },
 
@@ -202,11 +204,16 @@ var Collapsible = _react2.default.createClass({
 
     return _react2.default.createElement(
       'div',
-      { className: this.props.classParentString + ' ' + this.state.isClosed ? this.props.className : this.prop.openedClassName },
+      { className: this.props.classParentString + ' ' + (this.state.isClosed ? this.props.className : this.props.openedClassName) },
       _react2.default.createElement(
         'span',
         { className: triggerClassName, onClick: this.handleTriggerClick },
         trigger
+      ),
+      this.props.triggerSibling && _react2.default.createElement(
+        'span',
+        { className: this.props.classParentString + "__trigger-sibling" },
+        this.props.triggerSibling
       ),
       _react2.default.createElement(
         'div',
